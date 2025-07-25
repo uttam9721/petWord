@@ -1,0 +1,29 @@
+{
+    "message": "Upload successful",
+    "files": {
+        "image": [
+            {
+                "fieldname": "image",
+                "originalname": "cat-1868606_1280.jpg",
+                "encoding": "7bit",
+                "mimetype": "image/jpeg",
+                "destination": "public/images",
+                "filename": "1753201451748cat-1868606_1280.jpg",
+                "path": "public\\images\\1753201451748cat-1868606_1280.jpg",
+                "size": 339846
+            }
+        ],
+        "additionalImages": [
+            {
+                "fieldname": "additionalImages",
+                "originalname": "girl-5623231_1280.jpg",
+                "encoding": "7bit",
+                "mimetype": "image/jpeg",
+                "destination": "public/images",
+                "filename": "1753201451753girl-5623231_1280.jpg",
+                "path": "public\\images\\1753201451753girl-5623231_1280.jpg",
+                "size": 308533
+            }
+        ]
+    }
+}
