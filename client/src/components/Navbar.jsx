@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import logo from "../assets/attachment_81886229.jpeg";
+import {Link} from 'react-router-dom';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
