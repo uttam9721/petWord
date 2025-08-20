@@ -8,10 +8,10 @@ const Navbar = () => {
   const menuItems = ["About", "Services", "Contact"];
 
   return (
-    <header className="w-full bg-white shadow-md">
+    <header className="w-full bg-green-200 shadow-md">
       <div className="flex justify-between items-center px-6 py-3 sm:px-10">
         {/* Logo */}
-        <img className="w-16 sm:w-20" src={logo} alt="logo" />
+        <img className="w-16 sm:w-20 mix-blend-multiply" src={logo} alt="logo" />
 
         {/* Hamburger button for mobile */}
         <button
