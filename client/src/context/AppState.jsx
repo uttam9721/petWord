@@ -12,6 +12,9 @@
 //   const [user, setUser] = useState(null);
 //   const [token, setToken] = useState(localStorage.getItem("token") || "");
 
+//   // 🛒 Cart state
+//   const [cart, setCart] = useState([]);
+
 //   // 👉 Fetch Pets from API
 //   useEffect(() => {
 //     const fetchPets = async () => {
@@ -64,7 +67,7 @@
 //     }
 //   };
 
-//   // 👉 Login user (✅ added in context)
+//   // 👉 Login user
 //   const loginUser = async (formData) => {
 //     try {
 //       const res = await axios.post(`${url}/user/login`, formData, {
@@ -90,6 +93,23 @@
 //     localStorage.removeItem("token");
 //   };
 
+//   // 🛒 Cart functions
+//   const addToCart = (pet) => {
+//     setCart((prevCart) => {
+//       const exists = prevCart.find((item) => item._id === pet._id);
+//       if (exists) return prevCart; // avoid duplicates
+//       return [...prevCart, pet];
+//     });
+//   };
+
+//   const removeFromCart = (id) => {
+//     setCart((prevCart) => prevCart.filter((item) => item._id !== id));
+//   };
+
+//   const clearCart = () => {
+//     setCart([]);
+//   };
+
 //   return (
 //     <AppContext.Provider
 //       value={{
@@ -101,8 +121,14 @@
 //         user,
 //         token,
 //         registerUser,
-//         loginUser,  // ✅ Exposed login function here
+//         loginUser,
 //         logoutUser,
+
+//         // 🛒 Cart
+//         cart,
+//         addToCart,
+//         removeFromCart,
+//         clearCart,
 //       }}
 //     >
 //       {children}
@@ -114,12 +140,20 @@
 
 
 
+
+
+
+
+
+
 import React, { useState, useEffect } from "react";
 import AppContext from "./AppContext";
 import axios from "axios";
 
 const AppState = ({ children }) => {
-  const url = "http://localhost:4000/api";
+
+  // ✅ Backend URL from .env
+  const url = import.meta.env.VITE_API_URL;
 
   // 🐶 Pets state
   const [animal, setAnimal] = useState([]);
@@ -131,7 +165,9 @@ const AppState = ({ children }) => {
   // 🛒 Cart state
   const [cart, setCart] = useState([]);
 
-  // 👉 Fetch Pets from API
+  // =========================================================
+  // 🐶 FETCH ALL PETS
+  // =========================================================
   useEffect(() => {
     const fetchPets = async () => {
       try {
@@ -147,15 +183,18 @@ const AppState = ({ children }) => {
         } else {
           setAnimal(data);
         }
+
       } catch (error) {
         console.error("Error fetching pets:", error);
       }
     };
 
     fetchPets();
-  }, []);
+  }, [url]);
 
-  // 👉 Save token in localStorage
+  // =========================================================
+  // 💾 SAVE TOKEN
+  // =========================================================
   useEffect(() => {
     if (token) {
       localStorage.setItem("token", token);
@@ -164,7 +203,9 @@ const AppState = ({ children }) => {
     }
   }, [token]);
 
-  // 👉 Register user
+  // =========================================================
+  // 👤 REGISTER USER
+  // =========================================================
   const registerUser = async (formData) => {
     try {
       const res = await axios.post(`${url}/user/register`, formData, {
@@ -177,13 +218,16 @@ const AppState = ({ children }) => {
       }
 
       return res.data;
+
     } catch (error) {
       console.error("❌ Register Error:", error.response?.data || error.message);
       throw error.response?.data || { message: "Something went wrong" };
     }
   };
 
-  // 👉 Login user
+  // =========================================================
+  // 🔐 LOGIN USER
+  // =========================================================
   const loginUser = async (formData) => {
     try {
       const res = await axios.post(`${url}/user/login`, formData, {
@@ -196,24 +240,29 @@ const AppState = ({ children }) => {
       }
 
       return res.data;
+
     } catch (error) {
       console.error("❌ Login Error:", error.response?.data || error.message);
       throw error.response?.data || { message: "Something went wrong" };
     }
   };
 
-  // 👉 Logout user
+  // =========================================================
+  // 🚪 LOGOUT
+  // =========================================================
   const logoutUser = () => {
     setToken("");
     setUser(null);
     localStorage.removeItem("token");
   };
 
-  // 🛒 Cart functions
+  // =========================================================
+  // 🛒 CART FUNCTIONS
+  // =========================================================
   const addToCart = (pet) => {
     setCart((prevCart) => {
       const exists = prevCart.find((item) => item._id === pet._id);
-      if (exists) return prevCart; // avoid duplicates
+      if (exists) return prevCart;
       return [...prevCart, pet];
     });
   };
@@ -226,6 +275,9 @@ const AppState = ({ children }) => {
     setCart([]);
   };
 
+  // =========================================================
+  // 🌟 PROVIDER
+  // =========================================================
   return (
     <AppContext.Provider
       value={{
