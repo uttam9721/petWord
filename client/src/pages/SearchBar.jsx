@@ -10,7 +10,7 @@ const SearchBar = () => {
  const { animal } = useContext(AppContext);
 const [searchPets, setSearchPets] = useState([]);
 
-const { term } = useParams();   // ❌ you wrote `const [term]` (array destructuring) but useParams() returns an object, not an array
+const { term } = useParams();
 
 useEffect(() => {
     if (term && animal.length > 0) {
