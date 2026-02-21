@@ -1,9 +1,159 @@
+// // import React, { useState, useEffect } from "react";
+// // import AppContext from "./AppContext";
+// // import axios from "axios";
+
+// // const AppState = ({ children }) => {
+// //   const url = "http://localhost:4000/api";
+
+// //   // 🐶 Pets state
+// //   const [animal, setAnimal] = useState([]);
+
+// //   // 👤 Auth state
+// //   const [user, setUser] = useState(null);
+// //   const [token, setToken] = useState(localStorage.getItem("token") || "");
+
+// //   // 🛒 Cart state
+// //   const [cart, setCart] = useState([]);
+
+// //   // 👉 Fetch Pets from API
+// //   useEffect(() => {
+// //     const fetchPets = async () => {
+// //       try {
+// //         const { data } = await axios.get(`${url}/pets/all`, {
+// //           headers: { "Content-Type": "application/json" },
+// //           withCredentials: true,
+// //         });
+
+// //         console.log("API Response:", data);
+
+// //         if (data.pets) {
+// //           setAnimal(data.pets);
+// //         } else {
+// //           setAnimal(data);
+// //         }
+// //       } catch (error) {
+// //         console.error("Error fetching pets:", error);
+// //       }
+// //     };
+
+// //     fetchPets();
+// //   }, []);
+
+// //   // 👉 Save token in localStorage
+// //   useEffect(() => {
+// //     if (token) {
+// //       localStorage.setItem("token", token);
+// //     } else {
+// //       localStorage.removeItem("token");
+// //     }
+// //   }, [token]);
+
+// //   // 👉 Register user
+// //   const registerUser = async (formData) => {
+// //     try {
+// //       const res = await axios.post(`${url}/user/register`, formData, {
+// //         headers: { "Content-Type": "application/json" },
+// //       });
+
+// //       if (res.data.token) {
+// //         setToken(res.data.token);
+// //         setUser(res.data.user);
+// //       }
+
+// //       return res.data;
+// //     } catch (error) {
+// //       console.error("❌ Register Error:", error.response?.data || error.message);
+// //       throw error.response?.data || { message: "Something went wrong" };
+// //     }
+// //   };
+
+// //   // 👉 Login user
+// //   const loginUser = async (formData) => {
+// //     try {
+// //       const res = await axios.post(`${url}/user/login`, formData, {
+// //         headers: { "Content-Type": "application/json" },
+// //       });
+
+// //       if (res.data.token) {
+// //         setToken(res.data.token);
+// //         setUser(res.data.user);
+// //       }
+
+// //       return res.data;
+// //     } catch (error) {
+// //       console.error("❌ Login Error:", error.response?.data || error.message);
+// //       throw error.response?.data || { message: "Something went wrong" };
+// //     }
+// //   };
+
+// //   // 👉 Logout user
+// //   const logoutUser = () => {
+// //     setToken("");
+// //     setUser(null);
+// //     localStorage.removeItem("token");
+// //   };
+
+// //   // 🛒 Cart functions
+// //   const addToCart = (pet) => {
+// //     setCart((prevCart) => {
+// //       const exists = prevCart.find((item) => item._id === pet._id);
+// //       if (exists) return prevCart; // avoid duplicates
+// //       return [...prevCart, pet];
+// //     });
+// //   };
+
+// //   const removeFromCart = (id) => {
+// //     setCart((prevCart) => prevCart.filter((item) => item._id !== id));
+// //   };
+
+// //   const clearCart = () => {
+// //     setCart([]);
+// //   };
+
+// //   return (
+// //     <AppContext.Provider
+// //       value={{
+// //         // 🐶 Pets
+// //         animal,
+// //         setAnimal,
+
+// //         // 👤 Auth
+// //         user,
+// //         token,
+// //         registerUser,
+// //         loginUser,
+// //         logoutUser,
+
+// //         // 🛒 Cart
+// //         cart,
+// //         addToCart,
+// //         removeFromCart,
+// //         clearCart,
+// //       }}
+// //     >
+// //       {children}
+// //     </AppContext.Provider>
+// //   );
+// // };
+
+// // export default AppState;
+
+
+
+
+
+
+
+
+
 // import React, { useState, useEffect } from "react";
 // import AppContext from "./AppContext";
 // import axios from "axios";
 
 // const AppState = ({ children }) => {
-//   const url = "http://localhost:4000/api";
+
+//   // ✅ Backend URL from .env
+//   const url = import.meta.env.VITE_API_URL;
 
 //   // 🐶 Pets state
 //   const [animal, setAnimal] = useState([]);
@@ -15,7 +165,9 @@
 //   // 🛒 Cart state
 //   const [cart, setCart] = useState([]);
 
-//   // 👉 Fetch Pets from API
+//   // =========================================================
+//   // 🐶 FETCH ALL PETS
+//   // =========================================================
 //   useEffect(() => {
 //     const fetchPets = async () => {
 //       try {
@@ -31,15 +183,18 @@
 //         } else {
 //           setAnimal(data);
 //         }
+
 //       } catch (error) {
 //         console.error("Error fetching pets:", error);
 //       }
 //     };
 
 //     fetchPets();
-//   }, []);
+//   }, [url]);
 
-//   // 👉 Save token in localStorage
+//   // =========================================================
+//   // 💾 SAVE TOKEN
+//   // =========================================================
 //   useEffect(() => {
 //     if (token) {
 //       localStorage.setItem("token", token);
@@ -48,7 +203,9 @@
 //     }
 //   }, [token]);
 
-//   // 👉 Register user
+//   // =========================================================
+//   // 👤 REGISTER USER
+//   // =========================================================
 //   const registerUser = async (formData) => {
 //     try {
 //       const res = await axios.post(`${url}/user/register`, formData, {
@@ -61,13 +218,16 @@
 //       }
 
 //       return res.data;
+
 //     } catch (error) {
 //       console.error("❌ Register Error:", error.response?.data || error.message);
 //       throw error.response?.data || { message: "Something went wrong" };
 //     }
 //   };
 
-//   // 👉 Login user
+//   // =========================================================
+//   // 🔐 LOGIN USER
+//   // =========================================================
 //   const loginUser = async (formData) => {
 //     try {
 //       const res = await axios.post(`${url}/user/login`, formData, {
@@ -80,24 +240,29 @@
 //       }
 
 //       return res.data;
+
 //     } catch (error) {
 //       console.error("❌ Login Error:", error.response?.data || error.message);
 //       throw error.response?.data || { message: "Something went wrong" };
 //     }
 //   };
 
-//   // 👉 Logout user
+//   // =========================================================
+//   // 🚪 LOGOUT
+//   // =========================================================
 //   const logoutUser = () => {
 //     setToken("");
 //     setUser(null);
 //     localStorage.removeItem("token");
 //   };
 
-//   // 🛒 Cart functions
+//   // =========================================================
+//   // 🛒 CART FUNCTIONS
+//   // =========================================================
 //   const addToCart = (pet) => {
 //     setCart((prevCart) => {
 //       const exists = prevCart.find((item) => item._id === pet._id);
-//       if (exists) return prevCart; // avoid duplicates
+//       if (exists) return prevCart;
 //       return [...prevCart, pet];
 //     });
 //   };
@@ -110,6 +275,9 @@
 //     setCart([]);
 //   };
 
+//   // =========================================================
+//   // 🌟 PROVIDER
+//   // =========================================================
 //   return (
 //     <AppContext.Provider
 //       value={{
@@ -152,38 +320,25 @@ import axios from "axios";
 
 const AppState = ({ children }) => {
 
-  // ✅ Backend URL from .env
   const url = import.meta.env.VITE_API_URL;
 
-  // 🐶 Pets state
   const [animal, setAnimal] = useState([]);
 
-  // 👤 Auth state
+  // 🔐 AUTH STATE
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(localStorage.getItem("token") || "");
+  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("token"));
 
-  // 🛒 Cart state
   const [cart, setCart] = useState([]);
 
   // =========================================================
-  // 🐶 FETCH ALL PETS
+  // 🐶 FETCH PETS
   // =========================================================
   useEffect(() => {
     const fetchPets = async () => {
       try {
-        const { data } = await axios.get(`${url}/pets/all`, {
-          headers: { "Content-Type": "application/json" },
-          withCredentials: true,
-        });
-
-        console.log("API Response:", data);
-
-        if (data.pets) {
-          setAnimal(data.pets);
-        } else {
-          setAnimal(data);
-        }
-
+        const { data } = await axios.get(`${url}/pets/all`);
+        setAnimal(data.pets || data);
       } catch (error) {
         console.error("Error fetching pets:", error);
       }
@@ -198,101 +353,66 @@ const AppState = ({ children }) => {
   useEffect(() => {
     if (token) {
       localStorage.setItem("token", token);
+      setIsLoggedIn(true);
     } else {
       localStorage.removeItem("token");
+      setIsLoggedIn(false);
     }
   }, [token]);
 
   // =========================================================
-  // 👤 REGISTER USER
+  // REGISTER
   // =========================================================
   const registerUser = async (formData) => {
-    try {
-      const res = await axios.post(`${url}/user/register`, formData, {
-        headers: { "Content-Type": "application/json" },
-      });
-
-      if (res.data.token) {
-        setToken(res.data.token);
-        setUser(res.data.user);
-      }
-
-      return res.data;
-
-    } catch (error) {
-      console.error("❌ Register Error:", error.response?.data || error.message);
-      throw error.response?.data || { message: "Something went wrong" };
-    }
+    const res = await axios.post(`${url}/user/register`, formData);
+    return res.data;
   };
 
   // =========================================================
-  // 🔐 LOGIN USER
+  // LOGIN
   // =========================================================
   const loginUser = async (formData) => {
-    try {
-      const res = await axios.post(`${url}/user/login`, formData, {
-        headers: { "Content-Type": "application/json" },
-      });
+    const res = await axios.post(`${url}/user/login`, formData);
 
-      if (res.data.token) {
-        setToken(res.data.token);
-        setUser(res.data.user);
-      }
-
-      return res.data;
-
-    } catch (error) {
-      console.error("❌ Login Error:", error.response?.data || error.message);
-      throw error.response?.data || { message: "Something went wrong" };
+    if (res.data.token) {
+      setToken(res.data.token);
+      setUser(res.data.user);
     }
+
+    return res.data;
   };
 
   // =========================================================
-  // 🚪 LOGOUT
+  // LOGOUT
   // =========================================================
   const logoutUser = () => {
     setToken("");
     setUser(null);
-    localStorage.removeItem("token");
   };
 
   // =========================================================
-  // 🛒 CART FUNCTIONS
+  // CART
   // =========================================================
   const addToCart = (pet) => {
-    setCart((prevCart) => {
-      const exists = prevCart.find((item) => item._id === pet._id);
-      if (exists) return prevCart;
-      return [...prevCart, pet];
-    });
+    setCart((prev) => [...prev, pet]);
   };
 
   const removeFromCart = (id) => {
-    setCart((prevCart) => prevCart.filter((item) => item._id !== id));
+    setCart((prev) => prev.filter((item) => item._id !== id));
   };
 
-  const clearCart = () => {
-    setCart([]);
-  };
+  const clearCart = () => setCart([]);
 
-  // =========================================================
-  // 🌟 PROVIDER
-  // =========================================================
   return (
     <AppContext.Provider
       value={{
-        // 🐶 Pets
         animal,
-        setAnimal,
-
-        // 👤 Auth
         user,
         token,
+        isLoggedIn,
         registerUser,
         loginUser,
         logoutUser,
-
-        // 🛒 Cart
         cart,
         addToCart,
         removeFromCart,
